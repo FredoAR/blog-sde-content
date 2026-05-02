@@ -1,8 +1,8 @@
 ---
 layout: post
-title:  "POC — Configurar dominio de Neubox en Cloudflare con Cloudflare"
+title:  "POC — ¿Cómo conectar un dominio de Neubox a Cloudflare Pages?"
 date:  2026-04-13 23:34:52 -0600
-categories: cloudflare neubox tutorial
+categories: cloudflare neubox poc github
 
 ---
 
@@ -15,7 +15,8 @@ categories: cloudflare neubox tutorial
 
 ## Contexto
 
-Este documento describe el procedimiento completo para conectar un dominio registrado en **Neubox** a **Cloudflare**, y apuntarlo a un sitio estático desplegado en **Cloudflare Pages**. Incluye los errores encontrados durante el proceso y cómo resolverlos.
+Este documento describe el procedimiento completo para conectar un dominio registrado en **Neubox** a **Cloudflare**, y apuntarlo a un sitio estático desplegado en **Cloudflare Pages**. 
+Incluye los errores encontrados durante el proceso y cómo resolverlos.
 
 ---
 
@@ -41,7 +42,7 @@ Cloudflare te asignará dos nameservers propios. En este caso:
 - `xxxxx.ns.cloudflare.com`
 - `yyyyy.ns.cloudflare.com`
 
-> ⚠️ Guarda estos dos valores — los necesitarás en el siguiente paso.
+> ⚠️ Guarda estos dos valores, los necesitarás en el siguiente paso.
 
 ---
 
@@ -59,7 +60,7 @@ Cloudflare — Esperando propagación de nameservers
 
 ![Cloudflare — Esperando propagación de nameservers](/assets/images/posts/poc-cloudflare-dominio-neubox/image-1.png)
 
-La causa: en Neubox los nameservers estaban configurados de forma incompleta — solo se había agregado uno de los dos de Cloudflare y los de Neubox seguían activos.
+La causa: en Neubox los nameservers estaban configurados de forma incompleta, solo se había agregado uno de los dos de Cloudflare y los de Neubox seguían activos.
 
 Cloudflare mostraba exactamente qué debía quedar y qué debía eliminarse:
 
@@ -114,12 +115,12 @@ Error 522 — Connection timed out
 
 ### Causa
 
-El registro DNS en Cloudflare tenía un CNAME manual apuntando a `bytersoft-web.pages.dev`, pero un CNAME en el **apex del dominio** (`bytersoft.com` sin subdominio) no funciona correctamente de forma manual. Cloudflare requiere que los dominios root para Pages se configuren directamente desde el panel de Pages para aplicar CNAME Flattening automáticamente.
+El registro DNS en Cloudflare tenía un CNAME manual apuntando a `bytersoft-project.pages.dev`, pero un CNAME en el **apex del dominio** (`bytersoft.com` sin subdominio) no funciona correctamente de forma manual. Cloudflare requiere que los dominios root para Pages se configuren directamente desde el panel de Pages para aplicar CNAME Flattening automáticamente.
 
 ### Solución — Configurar el dominio desde Cloudflare Pages
 
 1. En el sidebar de Cloudflare, ve a **Workers & Pages**
-2. Abre tu proyecto (ej. `bytersoft-web`)
+2. Abre tu proyecto (ej. `bytersoft-project`)
 3. Ve a la pestaña **Dominios personalizados**
 4. Haz clic en **"Configurar un dominio personalizado"**
 5. Agrega:
