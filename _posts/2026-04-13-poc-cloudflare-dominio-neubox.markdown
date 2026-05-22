@@ -9,7 +9,6 @@ categories: cloudflare neubox poc github
 **Dominio:** bytersoft.com  
 **Registrador:** Neubox  
 **Hosting:** Cloudflare Pages  
-**Fecha:** Abril 2026
 
 ---
 
